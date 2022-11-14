@@ -1,9 +1,11 @@
 #!/bin/bash
 
 systemctl stop migo
-sleep 5
+sleep 1
 git pull
-sleep 5
+sleep 1
 npm install
-sleep 5
+sleep 1
+chmod +x index.js
+sleep 1
 systemctl start migo
