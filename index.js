@@ -18,7 +18,7 @@ client.on('ready', () => {
     console.log('Ready!');
 
     let updateTitle = cron.job("*/1 * * * *", function(){
-        let title = emojis + time_till_date(date);
+        let title = emojis + timeTillDate(date);
         client.guilds.find(val => val.id === serverId).setName(title).then(r => console.info('Set server name to: ' + r.name));
     });
 
@@ -28,7 +28,7 @@ client.on('ready', () => {
 client.on('message', message => {
     if (message.content === '!days')
     {
-        message.reply(emojis + time_till_date(date))
+        message.reply(emojis + timeTillDate(date))
             .catch(console.error);
     }
 
@@ -42,20 +42,20 @@ client.on('message', message => {
 
 client.on('error', console.error);
 
-function time_till_date(date2) {
+function timeTillDate(futureDate) {
     let ONE_HOUR = 1000 * 60 * 60;
-    let date1 = new Date();
+    let now = new Date();
 
-    let date1_ms = date1.getTime();
-    let date2_ms = date2.getTime();
+    let nowMs = now.getTime();
+    let futureDateMs = futureDate.getTime();
 
-    let difference_ms = Math.abs(date1_ms - date2_ms);
+    let differenceMs = Math.abs(nowMs - futureDateMs);
 
-    let total_hours = (difference_ms/ONE_HOUR);
-    let days = (total_hours/24);
-    let hours = Math.floor(total_hours % 24);
+    let totalHours = (differenceMs/ONE_HOUR);
+    let days = (totalHours/24);
+    let hours = Math.floor(totalHours % 24);
 
-    return Math.floor(days) + 'Days, ' + hours + 'Hours';
+    return Math.floor(days) + ' days, ' + hours + ' hours';
 }
 
 client.login(botToken)
