@@ -1,7 +1,7 @@
 #!/bin/bash
 
 systemctl stop migo
-sleep 1000
+sleep 5
 git pull
-sleep 1000
+sleep 5
 systemctl start migo
