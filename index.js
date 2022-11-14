@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 let cron = require('cron');
 const Discord = require('discord.js');
 const client = new Discord.Client();
