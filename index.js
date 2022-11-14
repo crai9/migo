@@ -3,12 +3,12 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 
-const token = 'NDc5NDk3NTA5MTExMzMyODc0.DlaG7A.zRWjL49JCGNSgfm-6YOXsI-LDfo';
+const token = 'NDc5NDk3NTA5MTExMzMyODc0.GEB2Xc.s262dZYt8AQpB5v6EqBTKeflddaLHjhiscsDbs';
 const test_server_id = '479484990837489665';
 const server_id = '473632099354673152';
 const miguel_id = '152190878247682048';
 
-const date = new Date('2022-12-09T00:00:00Z');
+const date = new Date('2022-12-09T07:00:00Z');
 const emojis = '🎢 🇫🇷 --> '
 
 client.on('ready', () => {
@@ -33,7 +33,7 @@ client.on('message', message => {
         message.reply(emojis + time_till_date(date));
     }
 
-    let react = false;
+    let react = true;
     if (react === true)
     {
         if(message.content.includes('mig') || message.author.id === miguel_id)
