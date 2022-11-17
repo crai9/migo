@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 let cron = require('cron');
-import { Client, GatewayIntentBits } from 'discord.js';
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent], });
+const Discord = require('discord.js');
+const client = new Discord.Client();
+
 
 const botToken = process.env.BOT_TOKEN;
 const serverId = '473632099354673152';
