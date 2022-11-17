@@ -4,7 +4,7 @@ let cron = require('cron');
 const {Client, IntentsBitField} = require('discord.js');
 
 const myIntents = new IntentsBitField();
-myIntents.add(IntentsBitField.Flags.Guild, IntentsBitField.Flags.GuildMessages, IntentsBitField.Flags.MessageContent);
+myIntents.add(IntentsBitField.Flags.Guild, IntentsBitField.Flags.GuildMessages, IntentsBitField.Flags.MessageContent, IntentsBitField.Flags.Guilds);
 
 const client = new Client({ intents: myIntents });
 
