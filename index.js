@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 let cron = require('cron');
+
 const Discord = require('discord.js');
 const client = new Discord.Client();
+
 
 const botToken = process.env.BOT_TOKEN;
 const serverId = '473632099354673152';
@@ -14,6 +16,10 @@ if (typeof botToken == 'undefined' || botToken === null) {
     console.error('Bot token not set');
     process.exit(9);
 }
+
+client.login(botToken)
+    .then(token => console.info('Logged in with token: ' + token))
+    .catch(token => console.error('Issue logging in with token: ' + token));
 
 client.on('ready', () => {
     console.log('Ready!');
@@ -59,6 +65,4 @@ function timeTillDate(futureDate) {
     return Math.floor(days) + ' days, ' + hours + ' hours';
 }
 
-client.login(botToken)
-    .then(token => console.info('Logged in with token: ' + token))
-    .catch(token => console.error('Issue logging in with token: ' + token));
+
