@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 let cron = require('cron');
-const Discord = require('discord.js');
-const client = new Discord.Client();
+
+const {Client, IntentsBitField} = require('discord.js');
+
+const myIntents = new IntentsBitField();
+myIntents.add(IntentsBitField.Flags.Guild, IntentsBitField.Flags.GuildMessages, IntentsBitField.Flags.MessageContent);
+
+const client = new Client({ intents: myIntents });
 
 const botToken = process.env.BOT_TOKEN;
 const serverId = '473632099354673152';
