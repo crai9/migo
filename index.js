@@ -8,6 +8,7 @@ const client = new Discord.Client();
 const botToken = process.env.BOT_TOKEN;
 const serverId = '473632099354673152';
 const miguelId = '152190878247682048';
+const kellyId = '270649102167965696';
 
 const date = new Date('2022-12-09T07:00:00Z');
 const emojis = '🎢 🇫🇷 --> '
@@ -43,6 +44,12 @@ client.on('message', message => {
         if (message.guild) {
             message.react(message.guild.emojis.find(val => val.name === 'migo'))
                 .catch(console.error);
+        }
+    }
+    if (message.author.id === kellyId) {
+        if (message.guild) {
+            message.react(message.guild.emojis.find(val => val.name === 'copium'))
+            .catch(console.error);
         }
     }
 });
