@@ -1,64 +1,43 @@
 #!/usr/bin/env node
-let cron = require('cron');
-const Discord = require('discord.js');
-const client = new Discord.Client();
 
 const botToken = process.env.BOT_TOKEN;
-const serverId = '473632099354673152';
-const miguelId = '152190878247682048';
-
-const date = new Date('2022-12-09T07:00:00Z');
-const emojis = '🎢 🇫🇷 --> '
 
 if (typeof botToken == 'undefined' || botToken === null) {
     console.error('Bot token not set');
     process.exit(9);
 }
 
-client.on('ready', () => {
-    console.log('Ready!');
+const fs = require('node:fs');
+const path = require('node:path');
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
 
-    let updateTitle = cron.job("*/1 * * * *", function(){
-        let title = emojis + timeTillDate(date);
-        client.guilds.find(val => val.id === serverId).setName(title).then(r => console.info('Set server name to: ' + r.name));
-    });
-
-    updateTitle.start();
-});
-
-client.on('message', message => {
-    if (message.content === '!days')
-    {
-        message.reply(emojis + timeTillDate(date))
-            .catch(console.error);
-    }
-
-    if (message.content.includes('mig') || message.author.id === miguelId) {
-        if (message.guild) {
-            message.react(message.guild.emojis.find(val => val.name === 'migo'))
-                .catch(console.error);
-        }
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildInvites,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildPresences,
+        GatewayIntentBits.GuildMessageReactions,
+    ],
+    partials: [Partials.User, Partials.Message, Partials.Reaction],
+    allowedMentions: {
+        repliedUser: true
     }
 });
 
-client.on('error', console.error);
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
-function timeTillDate(futureDate) {
-    let ONE_HOUR = 1000 * 60 * 60;
-    let now = new Date();
-
-    let nowMs = now.getTime();
-    let futureDateMs = futureDate.getTime();
-
-    let differenceMs = Math.abs(nowMs - futureDateMs);
-
-    let totalHours = (differenceMs/ONE_HOUR);
-    let days = (totalHours/24);
-    let hours = Math.floor(totalHours % 24);
-
-    return Math.floor(days) + ' days, ' + hours + ' hours';
+for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args));
+    } else {
+        client.on(event.name, (...args) => event.execute(...args));
+    }
 }
 
-client.login(botToken)
-    .then(token => console.info('Logged in with token: ' + token))
-    .catch(token => console.error('Issue logging in with token: ' + token));
+client.login(botToken).then(r => console.info());
