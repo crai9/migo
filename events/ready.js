@@ -4,14 +4,16 @@ module.exports = {
     once: true,
     execute(client) {
         console.log(`Ready! Logged in as ${client.user.tag}`);
-
+        console.log(client);
         const serverId = '473632099354673152';
         const date = new Date('2022-12-09T07:00:00Z');
         const emojis = '🎢 🇫🇷 --> '
 
         let updateTitle = cron.job("*/1 * * * *", function(){
             let title = emojis + timeTillDate(date);
-            client.guilds.find(val => val.id === serverId).setName(title).then(r => console.info('Set server name to: ' + r.name));
+            client.guilds.fetch(serverId).then(guild => {
+                guild.setName(title).then(r => console.info('Set server name to: ' + r.name));
+            })
         });
 
         updateTitle.start();
