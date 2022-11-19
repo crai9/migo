@@ -11,4 +11,5 @@ To do list:
 * Gamble currency
 * More pepes? Random Pepe react when Kelly speaks
 * !joke = Mexican Joke?
+* Debt tracking
 
